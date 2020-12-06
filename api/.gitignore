@@ -1,0 +1,5 @@
+.DS_Store
+vendor
+.idea
+./application/config/database.php
+./application/config/config.php
