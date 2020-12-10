@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>889</width>
+    <width>581</width>
     <height>493</height>
    </rect>
   </property>
@@ -191,7 +191,7 @@
     <rect>
      <x>380</x>
      <y>60</y>
-     <width>331</width>
+     <width>51</width>
      <height>16</height>
     </rect>
    </property>
@@ -199,30 +199,30 @@
     <string>Saldo:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_balance">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>60</y>
-     <width>651</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="refresh">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>100</y>
+     <x>470</x>
+     <y>150</y>
      <width>61</width>
      <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string>sgddddddddd</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_balance">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>40</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>
