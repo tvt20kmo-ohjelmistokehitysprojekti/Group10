@@ -2,21 +2,8 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// This can be removed if you use __autoload() in config.php OR use Modular Extensions
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
 
-/**
- * This is an example of a RestApi based on PHP and CodeIgniter 3.
- *
- *
- * @package         CodeIgniter
- * @subpackage      Rest Server
- * @category        Controller
- * @author          Pekka Alaluukas (edited the version made by Phil Sturgeon & Chris Kacerguis)
- * @license         MIT
- * @link            https://github.com/chriskacerguis/codeigniter-restserver
- */
 class balance extends REST_Controller {
 
     function __construct()
@@ -69,7 +56,11 @@ class balance extends REST_Controller {
             $Balance=$this->User_model->get_user($id);
             if (!empty($Balance))
             {
-                $this->set_response($Balance, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+		$a12 = json_encode($Balance);
+		$abcd = (string) $a12;
+		$new123 = preg_replace( '/[^0-9]/', '', $abcd );
+		$new456 = preg_replace("/\s+/", " ", $new123);
+                $this->set_response($new456, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
             }
             else
             {
