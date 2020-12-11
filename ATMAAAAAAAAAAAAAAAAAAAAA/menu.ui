@@ -202,7 +202,7 @@
   <widget class="QPushButton" name="refresh">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>480</x>
      <y>150</y>
      <width>61</width>
      <height>61</height>
