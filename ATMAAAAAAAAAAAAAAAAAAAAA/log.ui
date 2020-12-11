@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1022</width>
-    <height>663</height>
+    <width>911</width>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,11 +16,24 @@
   <widget class="QTextBrowser" name="label_log">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>30</y>
+     <x>0</x>
+     <y>0</y>
      <width>911</width>
      <height>581</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_back">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>takasi</string>
    </property>
   </widget>
  </widget>

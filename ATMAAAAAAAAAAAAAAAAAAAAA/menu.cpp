@@ -36,13 +36,9 @@ menu::~menu()
     delete ui;
 }
 
-void menu::on_refresh_clicked()
-{
-    balanceQuery();
-}
-
 void menu::on_btn_withdraw_clicked()
 {
+
     request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/withdraw"));
     basicAuth();
 
@@ -52,14 +48,17 @@ void menu::on_btn_withdraw_clicked()
     params.addQueryItem("idAccount", id);
     params.addQueryItem("amount", amount);
 
-    manager->post(request, params.query().toUtf8());
-}
+    QNetworkReply *reply = manager->post(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
 
-void menu::on_btn_transactionQuery_clicked()
-{
-    class::log *m = new class::log(id);
-    m->show();
-    close();
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
 }
 
 void menu::basicAuth()
@@ -73,6 +72,7 @@ void menu::basicAuth()
 void menu::on_btn_20_clicked()
 {
     amount = "20";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: yellow }");
     qDebug() << amount;
 }
 void menu::on_btn_40_clicked()
@@ -93,12 +93,6 @@ void menu::on_btn_100_clicked()
     qDebug() << amount;
 }
 
-void menu::on_btn_chooseSum_clicked()
-{
-    amount = "0";
-    qDebug() << amount;
-}
-
 void menu::balanceQuery()
 {
     request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Balance/?id="+id));
@@ -108,10 +102,74 @@ void menu::balanceQuery()
     {
         qApp->processEvents();
     }
-    answer.remove(QRegExp(QString::fromUtf8("\"")));
-    ui->label_balance->setText(answer+" €");
+
+    answer.remove("\n");
+    answer.remove("\"");
+    ui->label_balance->setText("Saldo: "+answer+"€");
 
     qDebug() << "id: "+id;
 }
 
 
+
+void menu::on_btn_deposit_clicked()
+{
+    request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Deposit/"));
+    basicAuth();
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery params;
+    params.addQueryItem("idAccount", id);
+    params.addQueryItem("amount", amount);
+
+    QNetworkReply *reply = manager->put(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
+
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
+}
+
+void menu::on_lineEdit_otherSum_editingFinished()
+{
+    amount = ui->lineEdit_otherSum->text();
+    qDebug() << amount;
+}
+
+void menu::on_btn_send_clicked()
+{
+    request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Transfer/"));
+    basicAuth();
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery params;
+    params.addQueryItem("idAccount1", id);
+    params.addQueryItem("idAccount2", ui->lineEdit_receiverId->text());
+    params.addQueryItem("amount", amount);
+
+    QNetworkReply *reply = manager->put(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
+
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
+}
+
+void menu::on_btn_transactionQuery_clicked()
+{
+    class::log *l = new class::log(id);
+    l->show();
+    this->hide();
+}

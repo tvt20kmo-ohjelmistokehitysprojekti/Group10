@@ -1,5 +1,6 @@
 #include "log.h"
 #include "ui_log.h"
+#include "menu.h"
 #include <QNetworkAccessManager>
 #include <QtNetwork>
 
@@ -44,4 +45,11 @@ log::log(const QString &id, QWidget *parent) :
 log::~log()
 {
     delete ui;
+}
+
+void log::on_btn_back_clicked()
+{
+    this->close();
+    //menu *m = new menu(idcard);
+    //m->show();
 }

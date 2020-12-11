@@ -16,6 +16,9 @@ public:
     explicit log(const QString &id, QWidget *parent = nullptr);
     ~log();
 
+private slots:
+    void on_btn_back_clicked();
+
 private:
     Ui::log *ui;
     QNetworkAccessManager *manager;

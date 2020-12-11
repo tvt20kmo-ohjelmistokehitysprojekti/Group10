@@ -20,7 +20,6 @@ public:
 
 
 private slots:
-    void on_refresh_clicked();
 
     void on_btn_20_clicked();
 
@@ -34,11 +33,15 @@ private slots:
 
     void on_btn_100_clicked();
 
-    void on_btn_chooseSum_clicked();
-
     void on_btn_transactionQuery_clicked();
 
     void balanceQuery();
+
+    void on_btn_deposit_clicked();
+
+    void on_lineEdit_otherSum_editingFinished();
+
+    void on_btn_send_clicked();
 
 private:
     Ui::menu *ui;
