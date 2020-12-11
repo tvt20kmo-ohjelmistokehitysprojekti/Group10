@@ -1,5 +1,6 @@
 #include "log.h"
 #include "ui_log.h"
+#include "menu.h"
 #include <QNetworkAccessManager>
 #include <QtNetwork>
 
@@ -8,8 +9,7 @@ log::log(const QString &id, QWidget *parent) :
     ui(new Ui::log)
 {
     ui->setupUi(this);
-
-    qDebug() << id;
+    idcard = id;
 
     manager = new QNetworkAccessManager();
     QObject::connect(manager, &QNetworkAccessManager::finished,
@@ -20,7 +20,6 @@ log::log(const QString &id, QWidget *parent) :
             }
             answer = reply->readAll();
             reply->deleteLater();
-            //qDebug() << answer;
         }
     );
     request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Action/?id="+id));
@@ -44,4 +43,11 @@ log::log(const QString &id, QWidget *parent) :
 log::~log()
 {
     delete ui;
+}
+
+void log::on_btn_back_clicked()
+{  
+    menu *m = new menu(idcard);
+    this->close();
+    m->show();
 }

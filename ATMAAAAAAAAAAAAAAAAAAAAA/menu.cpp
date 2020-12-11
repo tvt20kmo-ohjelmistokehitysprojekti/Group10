@@ -10,9 +10,7 @@ menu::menu(const QString &idcard, QWidget *parent) :
     ui(new Ui::menu)
 {
     ui->setupUi(this);
-
     id = idcard;
-
 
     manager = new QNetworkAccessManager();
     QObject::connect(manager, &QNetworkAccessManager::finished,
@@ -23,8 +21,6 @@ menu::menu(const QString &idcard, QWidget *parent) :
             }
 
             answer = reply->readAll();
-
-            qDebug() << answer;
         }
     );
 
@@ -36,13 +32,9 @@ menu::~menu()
     delete ui;
 }
 
-void menu::on_refresh_clicked()
-{
-    balanceQuery();
-}
-
 void menu::on_btn_withdraw_clicked()
 {
+
     request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/withdraw"));
     basicAuth();
 
@@ -52,14 +44,16 @@ void menu::on_btn_withdraw_clicked()
     params.addQueryItem("idAccount", id);
     params.addQueryItem("amount", amount);
 
-    manager->post(request, params.query().toUtf8());
-}
+    QNetworkReply *reply = manager->post(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
 
-void menu::on_btn_transactionQuery_clicked()
-{
-    class::log *m = new class::log(id);
-    m->show();
-    close();
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
 }
 
 void menu::basicAuth()
@@ -70,34 +64,6 @@ void menu::basicAuth()
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
 }
 
-void menu::on_btn_20_clicked()
-{
-    amount = "20";
-    qDebug() << amount;
-}
-void menu::on_btn_40_clicked()
-{
-    amount = "40";
-    qDebug() << amount;
-}
-
-void menu::on_btn_50_clicked()
-{
-    amount = "50";
-    qDebug() << amount;
-}
-
-void menu::on_btn_100_clicked()
-{
-    amount = "100";
-    qDebug() << amount;
-}
-
-void menu::on_btn_chooseSum_clicked()
-{
-    amount = "0";
-    qDebug() << amount;
-}
 
 void menu::balanceQuery()
 {
@@ -108,10 +74,98 @@ void menu::balanceQuery()
     {
         qApp->processEvents();
     }
-    answer.remove(QRegExp(QString::fromUtf8("\"")));
-    ui->label_balance->setText(answer+" €");
 
-    qDebug() << "id: "+id;
+    answer.remove("\n");
+    answer.remove("\"");
+    ui->label_balance->setText("Saldo: "+answer+"€");
+
+    ui->btn_20->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_40->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_50->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_100->setStyleSheet("background-color: none;font-size: 16px;");
 }
 
 
+
+void menu::on_btn_deposit_clicked()
+{
+    request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Deposit/"));
+    basicAuth();
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery params;
+    params.addQueryItem("idAccount", id);
+    params.addQueryItem("amount", amount);
+
+    QNetworkReply *reply = manager->put(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
+
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
+
+}
+
+void menu::on_lineEdit_otherSum_editingFinished()
+{
+    amount = ui->lineEdit_otherSum->text();
+}
+
+void menu::on_btn_send_clicked()
+{
+    request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Transfer/"));
+    basicAuth();
+
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery params;
+    params.addQueryItem("idAccount1", id);
+    params.addQueryItem("idAccount2", ui->lineEdit_receiverId->text());
+    params.addQueryItem("amount", amount);
+
+    QNetworkReply *reply = manager->put(request, params.query().toUtf8());
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
+
+    balanceQuery();
+
+    ui->lineEdit_otherSum->setText("");
+    amount = "0";
+}
+
+void menu::on_btn_transactionQuery_clicked()
+{
+    class::log *l = new class::log(id);
+    l->show();
+    this->close();
+}
+
+void menu::on_btn_20_clicked()
+{
+    amount = "20";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+void menu::on_btn_40_clicked()
+{
+    amount = "40";
+    ui->btn_40->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+
+void menu::on_btn_50_clicked()
+{
+    amount = "50";
+    ui->btn_50->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+
+void menu::on_btn_100_clicked()
+{
+    amount = "100";
+    ui->btn_100->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}

@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
             }
             answer = reply->readAll();
             reply->deleteLater();
-            qDebug() << answer;
         }
     );
 }
@@ -55,7 +54,8 @@ void MainWindow::on_btnlogin_clicked()
             close();
         }
         else{
-            qDebug() << "fuck you";
+            ui->label_paska->setStyleSheet("color: red;");
+            ui->label_paska->setText("Väärä id tai pin");
         }
     }
 }
