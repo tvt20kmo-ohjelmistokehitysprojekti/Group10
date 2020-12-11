@@ -41,7 +41,7 @@ public function index_post() {
          $withdraw = $this->Withdraw_model->withdraw_money($idAccount,$amount);
 
          if ($withdraw){
-            $message='Money withdrawed';
+            $message='Nosto onnistui';
             $this->set_response($message, REST_Controller::HTTP_CREATED);
         }
         else
@@ -49,7 +49,7 @@ public function index_post() {
             // Set the response and exit
             $this->response([
                 'status' => FALSE,
-                'message' => 'Failed to withdraw'
+                'message' => 'Nosto epäonnistui'
             ], REST_Controller::HTTP_CONFLICT); // CAN NOT CREATE (409) being the HTTP response code
         }
     }

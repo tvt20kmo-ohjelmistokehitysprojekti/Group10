@@ -69,7 +69,10 @@ class action extends REST_Controller {
             $Action=$this->Action_model->get_user($id);
             if (!empty($Action))
             {
-                $this->set_response($Action, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
+		$a1 = json_encode($Action);
+		$lmao = (string) $a1;
+		$bobbyshmurda = str_replace( array( ']', ",", '"', '_', '[' ), ' ', $lmao);
+		$this->set_response($bobbyshmurda, REST_Controller::HTTP_OK);
             }
             else
             {
