@@ -23,7 +23,7 @@ private:
     Ui::log *ui;
     QNetworkAccessManager *manager;
     QNetworkRequest request;
-    QString answer;
+    QString answer, idcard;
 };
 
 #endif // LOG_H

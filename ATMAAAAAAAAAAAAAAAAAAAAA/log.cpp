@@ -9,8 +9,7 @@ log::log(const QString &id, QWidget *parent) :
     ui(new Ui::log)
 {
     ui->setupUi(this);
-
-    qDebug() << id;
+    idcard = id;
 
     manager = new QNetworkAccessManager();
     QObject::connect(manager, &QNetworkAccessManager::finished,
@@ -21,7 +20,6 @@ log::log(const QString &id, QWidget *parent) :
             }
             answer = reply->readAll();
             reply->deleteLater();
-            //qDebug() << answer;
         }
     );
     request.setUrl(QUrl("http://www.students.oamk.fi/~c9karo00/Group10/RestApi/index.php/api/Action/?id="+id));
@@ -48,8 +46,8 @@ log::~log()
 }
 
 void log::on_btn_back_clicked()
-{
+{  
+    menu *m = new menu(idcard);
     this->close();
-    //menu *m = new menu(idcard);
-    //m->show();
+    m->show();
 }

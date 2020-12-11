@@ -10,9 +10,7 @@ menu::menu(const QString &idcard, QWidget *parent) :
     ui(new Ui::menu)
 {
     ui->setupUi(this);
-
     id = idcard;
-
 
     manager = new QNetworkAccessManager();
     QObject::connect(manager, &QNetworkAccessManager::finished,
@@ -23,8 +21,6 @@ menu::menu(const QString &idcard, QWidget *parent) :
             }
 
             answer = reply->readAll();
-
-            qDebug() << answer;
         }
     );
 
@@ -58,7 +54,6 @@ void menu::on_btn_withdraw_clicked()
 
     ui->lineEdit_otherSum->setText("");
     amount = "0";
-    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
 }
 
 void menu::basicAuth()
@@ -69,29 +64,6 @@ void menu::basicAuth()
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
 }
 
-void menu::on_btn_20_clicked()
-{
-    amount = "20";
-    ui->btn_20->setStyleSheet("QPushButton{ background-color: yellow }");
-    qDebug() << amount;
-}
-void menu::on_btn_40_clicked()
-{
-    amount = "40";
-    qDebug() << amount;
-}
-
-void menu::on_btn_50_clicked()
-{
-    amount = "50";
-    qDebug() << amount;
-}
-
-void menu::on_btn_100_clicked()
-{
-    amount = "100";
-    qDebug() << amount;
-}
 
 void menu::balanceQuery()
 {
@@ -107,7 +79,10 @@ void menu::balanceQuery()
     answer.remove("\"");
     ui->label_balance->setText("Saldo: "+answer+"€");
 
-    qDebug() << "id: "+id;
+    ui->btn_20->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_40->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_50->setStyleSheet("background-color: none;font-size: 16px;");
+    ui->btn_100->setStyleSheet("background-color: none;font-size: 16px;");
 }
 
 
@@ -133,13 +108,12 @@ void menu::on_btn_deposit_clicked()
 
     ui->lineEdit_otherSum->setText("");
     amount = "0";
-    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
+
 }
 
 void menu::on_lineEdit_otherSum_editingFinished()
 {
     amount = ui->lineEdit_otherSum->text();
-    qDebug() << amount;
 }
 
 void menu::on_btn_send_clicked()
@@ -164,12 +138,34 @@ void menu::on_btn_send_clicked()
 
     ui->lineEdit_otherSum->setText("");
     amount = "0";
-    ui->btn_20->setStyleSheet("QPushButton{ background-color: none }");
 }
 
 void menu::on_btn_transactionQuery_clicked()
 {
     class::log *l = new class::log(id);
     l->show();
-    this->hide();
+    this->close();
+}
+
+void menu::on_btn_20_clicked()
+{
+    amount = "20";
+    ui->btn_20->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+void menu::on_btn_40_clicked()
+{
+    amount = "40";
+    ui->btn_40->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+
+void menu::on_btn_50_clicked()
+{
+    amount = "50";
+    ui->btn_50->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
+}
+
+void menu::on_btn_100_clicked()
+{
+    amount = "100";
+    ui->btn_100->setStyleSheet("QPushButton{ background-color: grey;font-size: 16px;}");
 }

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>911</width>
-    <height>578</height>
+    <width>521</width>
+    <height>493</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -18,22 +24,35 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>911</width>
-     <height>581</height>
+     <width>521</width>
+     <height>493</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_back">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>91</width>
+     <x>10</x>
+     <y>440</y>
+     <width>71</width>
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
-    <string>takasi</string>
+    <string>Takaisin</string>
    </property>
   </widget>
  </widget>
