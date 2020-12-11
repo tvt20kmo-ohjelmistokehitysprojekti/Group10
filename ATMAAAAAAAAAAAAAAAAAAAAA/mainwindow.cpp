@@ -3,7 +3,7 @@
 #include "menu.h"
 #include <QNetworkAccessManager>
 #include <QtNetwork>
-#include <QNetworkAccessManager>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
                 qDebug() << reply->errorString();
                 return;
             }
-
             answer = reply->readAll();
             reply->deleteLater();
             qDebug() << answer;
@@ -43,7 +42,11 @@ void MainWindow::on_btnlogin_clicked()
     QString headerData = "Basic " + data;
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
 
-    manager->get(request);
+    QNetworkReply *reply = manager->get(request);
+    while (!reply->isFinished())
+    {
+        qApp->processEvents();
+    }
 
     if(idcard!=""){
         if(answer=="true"){

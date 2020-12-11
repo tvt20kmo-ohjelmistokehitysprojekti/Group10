@@ -1,21 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>log</class>
  <widget class="QWidget" name="log">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1022</width>
+    <height>663</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QTextBrowser" name="label_log">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>30</y>
+     <width>911</width>
+     <height>581</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

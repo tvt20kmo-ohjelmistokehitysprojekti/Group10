@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QNetworkAccessManager>
-#include "mainwindow.h"
+
 
 namespace Ui {
 class menu;
@@ -27,6 +27,18 @@ private slots:
     void basicAuth();
 
     void on_btn_withdraw_clicked();
+
+    void on_btn_40_clicked();
+
+    void on_btn_50_clicked();
+
+    void on_btn_100_clicked();
+
+    void on_btn_chooseSum_clicked();
+
+    void on_btn_transactionQuery_clicked();
+
+    void balanceQuery();
 
 private:
     Ui::menu *ui;
